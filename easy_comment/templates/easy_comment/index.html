@@ -1,0 +1,24 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'blog/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'easy_comment/css/comment.css' %}">
+    <script src="{% static 'ckeditor/ckeditor/plugins/prism/lib/prism/prism_patched.min.js' %}"></script>
+    <script src="http://libs.baidu.com/jquery/2.1.4/jquery.min.js"></script>
+    <link rel="stylesheet" href="{% static 'easy_comment/css/prism.css' %}">
+</head>
+<body>
+    <div class="container">
+        <div class="col-md-8 main">
+            <h3>{{ message }}</h3>
+            {% block content %}
+            {% endblock content %}
+        </div>
+        <div class="col-md-4 side"></div>
+    </div>
+</body>
+</html>

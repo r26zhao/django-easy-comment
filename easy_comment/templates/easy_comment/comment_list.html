@@ -1,0 +1,50 @@
+{% load comment_tags %}
+{% load mptt_tags %}
+{% load staticfiles %}
+
+{% get_comment_list_of post as nodes %}
+{% get_comments_user_count post as user_count %}
+
+<div class="comment-count">
+    <h3>{{ user_count }}人参与，{{ nodes.count }}条评论</h3>
+</div>
+<div class="comment-list">
+    {% if nodes.count > 0 %}
+        {% recursetree nodes %}
+        <div class="row {% if node.is_root_node %}comment-root{% else %}comment-leaf{% endif %}" id="c{{ node.id }}">
+            <div class="col-md-1 comment-left">
+                <a class="comment-avatar">
+                    <img src="{% static 'easy_comment/image/default.png' %}" alt="{{ node.user_name }}头像">
+                </a>
+            </div>
+            <div class="col-md-11 comment-right">
+                <span class="comment-user"><strong>
+                    {{ node.user_name }}
+                </strong></span>
+                {% if not node.is_root_node %}
+                <span class="glyphicon glyphicon-share-alt"></span>
+                <span class="comment-reply-to">@{{ node.parent.user_name }}</span>
+                {% endif %}
+                <span class="comment-time pull-right">{{ node.submit_date|timesince }}前</span>
+                <div class="comment-content">
+                    <p>{{ node.content|safe }}</p>
+                </div>
+                <a class="like" href="javascript:void(0);"><span class="glyphicon glyphicon-thumbs-up"></span> 0</a>
+                <a class="dislike" href="javascript:void(0);"><span class="glyphicon glyphicon-thumbs-down"></span> 0</a>
+                <a class="comment-reply" id="a-{{ node.id }}" href="#cmt-form">
+                    回复
+                </a>
+            </div>
+        </div>
+        <div class="comment-children {% if node.is_root_node %}first-generation{% endif %}">
+            {% if not node.is_leaf_node %}
+                {{ children }}
+            {% endif %}
+        </div>
+        {% endrecursetree %}
+    {% else %}
+        <div class="jumbotron">
+            <h4>暂无评论，来抢沙发</h4>
+        </div>
+    {% endif %}
+</div>

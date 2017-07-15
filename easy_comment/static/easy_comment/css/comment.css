@@ -1,0 +1,45 @@
+#id_parent{
+    display: none;
+}
+#id_post{
+    display: none;
+}
+#id_honeypot{
+    display: none;
+}
+.comment-avatar img{
+    width: 40px;
+    height: 40px;
+}
+.comment-children{
+    margin-left: 40px;
+}
+.comment-root{
+    padding-top: 20px;
+    padding-bottom: 10px;
+    border-top: solid 1px;
+}
+.comment-leaf{
+    padding-top: 15px;
+    padding-bottom: 10px;
+    border-top: dashed 1px;
+}
+.comment-reply-to{
+    color: #23527c;
+}
+.comment-time{
+    color: #8590a6;
+}
+.like{
+    margin-right: 15px;
+}
+.dislike{
+    margin-right: 15px;
+}
+#cancel-reply{
+    margin-right: 20px;
+}
+.comment-count{
+    padding-top: 30px;
+    color: #e74851;
+}
