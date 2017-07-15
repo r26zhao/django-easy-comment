@@ -54,6 +54,7 @@ coverage.xml
 *.log
 local_settings.py
 media/
+easy_comment/migrations
 
 # Flask stuff:
 instance/
