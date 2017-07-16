@@ -3,6 +3,7 @@
 
 {% generate_form_for post as form %}
 <div class="cmt-form">
+{% if request.user.is_authenticated %}
     <form class="comment-form" id="cmt-form" method="post" action="{% url 'easy_comment:submit_comment' post.id %}">
         {% csrf_token %}
         {% for field in form %}
@@ -12,7 +13,14 @@
         <button class="btn btn-primary pull-right" type="submit">提交评论</button>
     </form>
     <button class="btn btn-danger pull-right" id="cancel-reply" style="display: none">取消回复</button>
+{% else %}
+    <div class="jumbotron">
+        <h3 class="text-center"><a>登录</a>后参与评论</h3>
+    </div>
+{% endif %}
 </div>
+
+<!-- 在非admin后台的地方使用django-ckeditor，需要引入这两个js -->
 <script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
 <script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
 <script>
