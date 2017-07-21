@@ -29,9 +29,14 @@
                 <div class="comment-content">
                     <p>{{ node.content|safe }}</p>
                 </div>
-                <a class="like" href="javascript:void(0);"><span class="glyphicon glyphicon-thumbs-up"></span> 0</a>
-                <a class="dislike" href="javascript:void(0);"><span class="glyphicon glyphicon-thumbs-down"></span> 0</a>
-                <a class="comment-reply" id="a-{{ node.id }}" href="#cmt-form">
+                {% get_like_action request.user node as action %}
+                {% get_like_count node as like_num %}
+                {% get_dislike_count node as dislike_num %}
+                <a class="like {% if not request.user.is_authenticated %}no-login{% endif %}" id="like-{{ node.id }}" data-id="{{ node.id }}" data-action="{% if action == 1 %}cancel-like{% else %}like{% endif %}" href="javascript:void(0);">
+                    <span class="glyphicon glyphicon-thumbs-up {% if action == 1 %}red-finger{% endif %}"></span><span class="like-total">{{ like_num }}</span></a>
+                <a class="like {% if not request.user.is_authenticated %}no-login{% endif %}" id="dislike-{{ node.id }}" data-id="{{ node.id }}" data-action="{% if action == -1 %}cancel-dislike{% else %}dislike{% endif %}" href="javascript:void(0);">
+                    <span class="glyphicon glyphicon-thumbs-down {% if action == -1  %}red-finger{% endif %}"></span><span class="dislike-total">{{ dislike_num }}</span></a>
+                <a class="comment-reply {% if not request.user.is_authenticated %}no-login{% endif %}" id="a-{{ node.id }}" href="#cmt-form">
                     回复
                 </a>
             </div>

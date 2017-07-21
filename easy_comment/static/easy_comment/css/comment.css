@@ -40,6 +40,15 @@
     margin-right: 20px;
 }
 .comment-count{
-    padding-top: 30px;
+    margin:40px 0 5px;
+    color: #e74851;
+}
+.like-total{
+    margin-left: 5px;
+}
+.dislike-total{
+    margin-left: 5px;
+}
+.red-finger{
     color: #e74851;
 }

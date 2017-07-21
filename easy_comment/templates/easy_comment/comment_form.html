@@ -25,7 +25,9 @@
 <script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
 <script>
     $(window).load(function () {
-        $(".comment-form")[0].reset();
+        if (!$(".comment-reply").hasClass('no-login')){
+            $(".comment-form")[0].reset();
+        }
         if (sessionStorage.getItem('reply')){
             sessionStorage.removeItem('reply');
         }
@@ -47,6 +49,10 @@
 
         // 点击评论里的回复，页面定位到评论框，同时取消回复按钮出现
         $(".comment-reply").click(function () {
+            if ($(this).hasClass('no-login')){
+                alert('登陆后才能回复');
+                return false;
+            }
             var pid = $(this).attr('ID').replace('a-', '');
             sessionStorage.setItem('reply', true);
             sessionStorage.setItem('pid', pid);
@@ -90,13 +96,70 @@
                 success:function (json) {
                     sessionStorage.setItem('anchor', true);
                     sessionStorage.setItem('new_comment', json.new_comment);
-                    alert(json.msg);
                     window.location.reload();
                 },
                 error:function (json) {
                     alert(json.msg);
                 }
             });
+        });
+        $("a.like").click(function (e) {
+            e.preventDefault();
+            if ($(this).hasClass('no-login')){
+                alert('请在登陆后执行该操作');
+                return false;
+            }
+            var x = $(this).data('id');
+            var action = $(this).data('action');
+            var like_obj = $("#like-" + x);
+            var dislike_obj = $("#dislike-" + x);
+            var like_num = parseInt($(like_obj).find("span.like-total").text());
+            var dislike_num = parseInt($(dislike_obj).find("span.dislike-total").text());
+            if (action == 'like'){
+                $(like_obj).find("span.like-total").text(like_num + 1);
+                $(like_obj).find("span.glyphicon").addClass('red-finger');
+                $(like_obj).data('action', 'cancel-like');
+                if ($(dislike_obj).data('action') == 'cancel-dislike'){
+                    $(dislike_obj).find("span.dislike-total").text(dislike_num + 1);
+                    $(dislike_obj).find("span.glyphicon").removeClass('red-finger');
+                    $(dislike_obj).data('action', 'dislike');
+                }
+            }
+            if (action == 'cancel-like'){
+                $(like_obj).find("span.like-total").text(like_num - 1);
+                $(like_obj).find("span.glyphicon").removeClass('red-finger');
+                $(like_obj).data('action', 'like');
+            }
+            if (action == 'dislike'){
+                $(dislike_obj).find("span.dislike-total").text(dislike_num - 1);
+                $(dislike_obj).find("span.glyphicon").addClass('red-finger');
+                $(dislike_obj).data('action', 'cancel-dislike');
+                if ($(like_obj).data('action') == 'cancel-like'){
+                    $(like_obj).find("span.like-total").text(like_num - 1);
+                    $(like_obj).find("span.glyphicon").removeClass('red-finger');
+                    $(like_obj).data('action', 'like');
+                }
+            }
+            if (action == 'cancel-dislike'){
+                $(dislike_obj).find("span.dislike-total").text(dislike_num + 1);
+                $(dislike_obj).find("span.glyphicon").removeClass('red-finger');
+                $(dislike_obj).data('action', 'dislike');
+            }
+            $.ajaxSetup({
+                data: {csrfmiddlewaretoken: '{{ csrf_token }}' }
+             });
+            $.post(
+                '{% url 'easy_comment:like' %}',
+                {
+                    id:x,
+                    action:action
+                },
+                function (data) {
+                    if (data['msg'] == 'KO'){
+                        alert('Invalid action!');
+                    }
+                }
+            );
         });
     });
 </script>
