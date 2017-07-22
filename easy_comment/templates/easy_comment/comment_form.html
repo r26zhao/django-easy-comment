@@ -2,7 +2,7 @@
 {% load comment_tags %}
 
 {% generate_form_for post as form %}
-<div class="cmt-form">
+<div class="cmt-form container-fluid">
 {% if request.user.is_authenticated %}
     <form class="comment-form" id="cmt-form" method="post" action="{% url 'easy_comment:submit_comment' post.id %}">
         {% csrf_token %}

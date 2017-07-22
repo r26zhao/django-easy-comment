@@ -5,11 +5,12 @@
 {% get_comment_list_of post as nodes %}
 {% get_comments_user_count post as user_count %}
 
+<div class="container-fluid">
 <div class="comment-count">
     <h3>{{ user_count }}人参与，{{ nodes.count }}条评论</h3>
 </div>
 
-<div class="comment-list container-fluid">
+<div class="comment-list">
     {% if nodes.count > 0 %}
         {% recursetree nodes %}
         <div class="row {% if node.is_root_node %}comment-root{% else %}comment-leaf{% endif %}" id="c{{ node.id }}">
@@ -53,4 +54,5 @@
             <h4>暂无评论，来抢沙发</h4>
         </div>
     {% endif %}
+</div>
 </div>
