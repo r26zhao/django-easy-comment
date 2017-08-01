@@ -55,6 +55,7 @@ coverage.xml
 local_settings.py
 media/
 easy_comment/migrations
+online_status/migrations
 
 # Flask stuff:
 instance/
