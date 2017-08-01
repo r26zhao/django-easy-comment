@@ -2,18 +2,14 @@
 {% load comment_tags %}
 
 {% generate_form_for post as form %}
-<div id="cmt-form">
+<div class="container-fluid" id="cmt-form">
 {% if request.user.is_authenticated %}
     <div class="comment-header">
         <a class="comment-avatar">
-            <img class="img-rounded" src="{{ request.user.avatar.url }}">
+            <img class="img-rounded" src="{% static 'easy_comment/image/default.png' %}">
         </a>
         <span><strong>
-            {% if request.user.nickname %}
-            {{ request.user.nickname }}
-            {% else %}
             {{ request.user.username }}
-            {% endif %}
         </strong></span>
         <span class="glyphicon glyphicon-edit"></span>
         <span id="reply-to" style="display:none;">回复：<a class="reply-to-name" href="javascript:void(0);">@Aaron</a></span>
@@ -29,7 +25,7 @@
     <button class="btn btn-danger pull-right" id="cancel-reply" style="display: none">取消回复</button>
 {% else %}
     <div class="jumbotron">
-        <h3 class="text-center"><a href="{% url 'account_login' %}?next={{ request.path }}">登录</a>后参与评论</h3>
+        <h3 class="text-center"><a>登录</a>后参与评论</h3>
     </div>
 {% endif %}
 </div>
@@ -55,6 +51,7 @@
         }
     });
     $(document).ready(function () {
+        $(".comment-content img").removeAttr('style');
         // 点击取消回复按钮，按钮消失，同时抹除sessionStorage里记录的reply
         $("#cancel-reply").click(function () {
             sessionStorage.removeItem('reply');

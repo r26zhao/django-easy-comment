@@ -3,16 +3,7 @@ from .models import Comment, Like
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST
 
-from . import handlers
-from django.db.models.signals import post_save
-
 # Create your views here.
-
-def my_handler(sender, **kwargs):
-    print('####################################')
-    print(sender)
-    print(kwargs)
-
 
 @require_POST
 def submit_comment(request, id):
