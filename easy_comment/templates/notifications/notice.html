@@ -1,0 +1,19 @@
+<div class="alert alert-block alert-{{ notice.level }}">
+  <h4>
+    <b>{{ notice.actor }}</b>
+    {% if notice.target %}
+        在&nbsp;<a class="notice-target" href="{{ notice.target.get_absolute_url }}#c{{ notice.action_object.id }}">{{ notice.target }}</a> 中&nbsp;
+    {% endif %}
+    {{ notice.verb }}
+  </h4>
+  
+  <p>{{ notice.timesince }} 前</p>
+  
+  <p>{{ notice.description|safe|linebreaksbr }}</p>
+  <div class="row notice-action">
+    <a class="btn btn-danger pull-right" href="{% url 'notifications:delete' notice.slug %}">删除</a>
+  {% if notice.unread %}
+    <a class="btn btn-primary pull-right" href="{% url 'notifications:mark_as_read' notice.slug %}">标记为已读</a>
+  {% endif %}
+  </div>
+</div>

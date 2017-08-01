@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+{% load notifications_tags %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Notifications</title>
+    <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="http://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="{% static 'easy_comment/css/comment.css' %}">
+</head>
+<body>
+    <div class="container notice-list">
+        <div class="col-md-12"><h3 class="notice-head">Notifications</h3></div>
+        <div class="col-md-4">
+            <div class="list-group">
+            {% notifications_unread as unread_count %}
+                  <a href="{% url 'notifications:all' %}" class="list-group-item {% if request.path == '/notifications/' %}active{% endif %}">
+                      全部
+                      <span class="badge"></span>
+                  </a>
+                  <a href="{% url 'notifications:unread' %}" class="list-group-item {% if request.path != '/notifications/' %}active{% endif %}">
+                      未读
+                      <span class="badge">{% if unread_count > 0 %}{{ unread_count }}{% endif %}</span>
+                  </a>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <ul class="notifications">
+              {% for notice in notifications %}
+                {% include 'notifications/notice.html' %}
+              {% empty %}
+                  <div class="jumbotron">
+                    <h4>暂无通知</h4>
+                  </div>
+              {% endfor %}
+            </ul>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function () {
+            $(".list-group a").click(function () {
+                $(this).addClass('active');
+                $(this).siblings().removeClass('active');
+            });
+            $(".notifications img").removeAttr('style');
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,10 @@
+Hello {{receiver}},
+
+您有 {{unsend_count}} 条最新评论通知。
+
+{% for notice in notice_list %}
+    {{ notice.actor }} 在 {{ notice.target }} 中 {{ notic.verb }}
+{% endfor %}
+
+请点击下面的链接，登录后查看
+{{ unread-link }}

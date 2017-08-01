@@ -58,6 +58,12 @@
 .comment-content{
     margin: 5px 0;
 }
+.comment-content img{
+    max-width: 100%;
+    height: auto;
+    border: solid 1px;
+    margin: 5px 0;
+}
 .like{
     margin-right: 15px;
 }
@@ -79,4 +85,30 @@
 }
 .red-finger{
     color: #e74851;
+}
+
+/*--- notification setting */
+.notice-list{
+    margin-top: 50px;
+}
+.notice-head{
+    border-bottom: solid 1px;
+    border-color: silver;
+}
+.notifications{
+    padding: 0;
+}
+.notifications img{
+    margin: 5px 0;
+    max-width: 100%;
+    height: auto;
+}
+.notice-target{
+    color: #e74851;
+}
+.notice-action{
+    margin: 0;
+}
+.notice-action a{
+    margin-left: 20px;
 }
