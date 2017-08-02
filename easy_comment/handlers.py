@@ -14,6 +14,7 @@ def get_recipient():
     return recipient
 
 ADMINS = get_recipient()
+SEND_NOTIFICATION_EMAIL = getattr(settings, 'SEND_NOTIFICATION_EMAIL', False)
 
 def email_handler(*args):
     for user in args:
@@ -43,14 +44,14 @@ def comment_handler(sender, instance, created, **kwargs):
                             action_object=instance,
                             target=instance.post,
                             description=instance.content)
-                if settings.SEND_NOTIFICATION_EMAIL:
+                if SEND_NOTIFICATION_EMAIL:
                     email_handler(*recipient)
             if not instance.user_name == instance.parent.user_name:
                 notify.send(instance.user, recipient=instance.parent.user, verb='@了你',
                             action_object=instance,
                             target=instance.post,
                             description=instance.content)
-                if settings.SEND_NOTIFICATION_EMAIL:
+                if SEND_NOTIFICATION_EMAIL:
                     email_handler(instance.parent.user)
         else:
             if recipient.count() > 0:
@@ -58,7 +59,7 @@ def comment_handler(sender, instance, created, **kwargs):
                             action_object=instance,
                             target=instance.post,
                             description=instance.content)
-                if settings.SEND_NOTIFICATION_EMAIL:
+                if SEND_NOTIFICATION_EMAIL:
                     email_handler(*recipient)
 
 post_save.connect(comment_handler, sender=Comment)
