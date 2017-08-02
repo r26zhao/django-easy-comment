@@ -5,7 +5,6 @@ from django.conf import settings
 from django.apps import apps
 from django.template.loader import render_to_string
 from django.core.mail import send_mail
-from . import handlers
 
 def get_recipient():
     admins = [i[0] for i in settings.ADMINS]
