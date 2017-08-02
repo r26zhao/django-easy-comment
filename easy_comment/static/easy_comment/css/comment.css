@@ -77,6 +77,9 @@
     margin:40px 0 5px;
     color: #e74851;
 }
+.container-fluid{
+    padding: 0;
+}
 .like-total{
     margin-left: 5px;
 }
