@@ -1,6 +1,9 @@
 from django import template
 from ..forms import CommentForm
 from ..models import Like
+from django.conf import settings
+from django.apps import apps
+from django.db.models.aggregates import Count
 
 register = template.Library()
 
@@ -38,3 +41,10 @@ def get_like_count(comment):
 @register.simple_tag
 def get_dislike_count(comment):
     return -comment.like_set.filter(status = False).count()
+
+@register.simple_tag
+def get_comment_rank(num=5):
+    app_model = settings.COMMENT_ENTRY_MODEL.split('.')
+    Post = apps.get_model(*app_model)
+    post_list = Post.objects.annotate(comment_num=Count('comment')).order_by('-comment_num')
+    return post_list[:num]
