@@ -2,6 +2,7 @@ from .forms import CommentForm
 from .models import Comment, Like
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST
+from . import handlers
 
 # Create your views here.
 
