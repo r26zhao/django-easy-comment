@@ -56,6 +56,7 @@ local_settings.py
 media/
 easy_comment/migrations
 online_status/migrations
+.idea/
 
 # Flask stuff:
 instance/
