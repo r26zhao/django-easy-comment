@@ -163,6 +163,12 @@ python manage.py migrate
 ```
 ## 评论通知
 每当用户发表一条评论、回复或者点赞、踩，都会生成notification实例，管理员（admin）可以收到所有通知，普通用户可以收到与自己相关的评论、回复和点赞（踩 看不到）。
+
+在settings.py里添加ADMINS，需要提供管理员的用户名和邮箱。
+```
+ADMINS = (('Aaron', 'rudy710@qq.com'),)  # 网站管理员
+```
+
 ![image](http://www.aaron-zhao.com//media/upload/Aaron/2017/08/03/ofpkpf.png)
 
 ```/notifications/``` 当前登录用户的所有通知
@@ -180,7 +186,6 @@ python manage.py migrate
 
 ```
 SEND_NOTIFICATION_EMAIL = True   # 开启邮件通知
-ADMINS = (('Aaron', 'rudy710@qq.com'),)  # 网站管理员
 
 # SMTP设置
 EMAIL_HOST = ''
