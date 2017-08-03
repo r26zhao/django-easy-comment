@@ -70,6 +70,7 @@ CKEDITOR_RESTRICT_BY_DATE = True
 CKEDITOR_BROWSE_SHOW_DIRS = True
 ```
 更多ckeditor的设置，可以参考下这里：[**django博客开发：添加富文本编辑器ckeditor**](http://www.aaron-zhao.com/post/1/)
+
 4. 在项目的urls.py里加入easy_comment, ckeditor_upload 和 notification的url
 
 ```
