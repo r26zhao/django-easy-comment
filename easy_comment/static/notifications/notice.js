@@ -24,12 +24,13 @@ jQuery(function ($) {
                     clearInterval(blink.timer);
                     document.title = blink.title;
                     blink.is_flashing = false;
+                    $(".live-notify-badge").text('');
                 }
             }
         };
         function fetch_data() {
             $.get(
-                "notifications/api/unread_count/",
+                "/notifications/api/unread_count/",
                 function (data) {
                     if (data.unread_count > 0){
                         $(".live-notify-badge").text(data.unread_count);
