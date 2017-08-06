@@ -1,5 +1,5 @@
 # django-easy-comment
- django-easy-comment 是一个评论插件，功能包括评论，层级回复，点赞，（email）通知。在线参考地址：**http://www.aaron-zhao.com/post/6/#cmt-form**
+ django-easy-comment 是一个评论插件，功能包括评论，层级回复，点赞，（email && 站内）通知。在线参考地址：**http://www.aaron-zhao.com/post/6/#cmt-form**
  ![image](http://www.aaron-zhao.com/media/upload/Aaron/2017/08/02/vzlhpz.png)
 
  评论框编辑器使用的[**django-ckeditor**](https://github.com/django-ckeditor/django-ckeditor)
@@ -7,6 +7,17 @@
  层级回复功能用[**django-mptt**](https://github.com/django-mptt/django-mptt)实现的，mptt在后台会记录层级回复的顺序
 
  通知功能使用的[**django-notifications-hq**](https://github.com/django-notifications/django-notifications)
+
+## 更新 2017.08.07
+### 增加站内实时通知
+开启站内通知，在```base.html```模板里引入```notifications/notice.js```
+
+
+```
+<script src="{% static 'notifications/notice.js' %}"></script>
+```
+
+如果想要显示未读通知的数量，写一个```<span class="live-notify-badge"><span>```，```notice.js```脚本会自动更新，每30秒一次。
 ## 开发环境
 django 1.11, python 3.4
 ## 安装
@@ -168,7 +179,12 @@ python manage.py migrate
 ```
 ADMINS = (('Aaron', 'rudy710@qq.com'),)  # 网站管理员
 ```
+开启站内通知，在base.html模板里引入notifications/notice.js
 
+```
+<script src="{% static 'notifications/notice.js' %}"></script>
+```
+如果想要显示未读通知的数量，写一个```<span class="live-notify-badge"><span>```，notice.js脚本会自动更新，每30秒一次。
 ![image](http://www.aaron-zhao.com//media/upload/Aaron/2017/08/03/ofpkpf.png)
 
 ```/notifications/``` 当前登录用户的所有通知
