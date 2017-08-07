@@ -8,7 +8,7 @@ from django.utils.deprecation import MiddlewareMixin
 class OnlineStatusMiddleware(MiddlewareMixin):
 
     def process_request(self, request):
-        if request.user.is_authenticated():
+        if request.user.is_authenticated() and (not request.path == '/notifications/api/unread_count/'):
             cache_key = '%s_last_login' % request.user.username
             now =timezone.now()
             # 用户是第一次登录、或者是缓存过去、或者是服务器重启导致缓存消失
