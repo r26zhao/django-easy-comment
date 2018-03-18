@@ -3,7 +3,8 @@
 <div class="pinglun" id="评论">
     <div class="comment-form-header">
         {% if request.user.is_authenticated %}
-        <img src="{{ request.user.get_avatar_url }}">
+        <!-- 设置你的头像 -->
+        <img src="{{ request.user.avatar.url }}">
         <div class="header-username">
             <span>
                 {{ request.user.username }}
@@ -13,7 +14,8 @@
             <span id="recipient"></span>
         </div>
         {% else %}
-        <span class="remind-login">尚未登录，请<a href="{% url 'account_login' %}?next={{ request.path }}">登录</a>后参与评论</span>
+        <!-- 设置登录链接 -->
+        <span class="remind-login">尚未登录，请<a href="#">登录</a>后参与评论</span>
         {% endif %}
     </div>
     {% generate_form entry as form %}
@@ -44,9 +46,6 @@
     <div class="pinglun-list">
     </div>
 </div>
-<!-- 站内通知功能 -->
-<script src="{% static 'notifications/notice.js' %}"></script>
-
 <!-- 提交评论 回复 各种ajax -->
 <script>
     $('.pinglun-text img').removeAttr('style');
