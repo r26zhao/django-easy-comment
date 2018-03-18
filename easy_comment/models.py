@@ -16,7 +16,7 @@ class Comment(MPTTModel):
                               verbose_name='评论模型',
                               related_name='comments')
     parent = TreeForeignKey('self', blank=True, null=True, verbose_name='父级评论')
-    content = RichTextUploadingField(verbose_name='评论', config_name='comment')
+    content = RichTextUploadingField(verbose_name='评论', config_name='default')
     created = models.DateTimeField(auto_now_add=True, verbose_name='提交时间')
 
     class MPTTMeta:
