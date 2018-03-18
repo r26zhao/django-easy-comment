@@ -1,0 +1,28 @@
+{% load staticfiles %}
+<div class="pinglun-entry" id="c{{ comment.id }}">
+    <div class="pinglun-avatar">
+        <img src="{{ comment.user.get_avatar_url }}">
+    </div>
+    <div class="pinglun-body">
+        <h3>
+            {{ comment.user.username }}
+            <span class="pull-right">{{ comment.submit_date|timesince }}</span>
+        </h3>
+        {% if comment.parent %}
+        <div class="parent-pinglun">
+            <blockquote>
+                <em><i class="fa fa-quote-left"></i>{{ comment.parent.user.username }}</em><br>
+                <div>{{ comment.parent.content|safe }}</div>
+            </blockquote>
+        </div>
+        {% endif %}
+        <div class="pinglun-text">{{ comment.content|safe }}</div>
+    </div>
+    <div class="clear"></div>
+    <div class="pinglun-bottom">
+        <a class="reply" id="{{ comment.id }}" href="#评论" data-name="{{ comment.user.username }}">
+            <span class="pull-right">回复</span>
+        </a>
+        <div class="clear"></div>
+    </div>
+</div>

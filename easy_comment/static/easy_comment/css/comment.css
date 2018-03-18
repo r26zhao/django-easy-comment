@@ -1,117 +1,30 @@
-#id_parent{
+#id_parent, #id_entry, #id_honeypot {
     display: none;
 }
-#id_post{
-    display: none;
+#cancel-button {
+    font-size: 14px;
+    padding: 0 20px;
+    background-color: #E74C3C;
+    margin-top: 10px;
+	display: none;
 }
-#id_honeypot{
-    display: none;
+#reply-action {
+	color: #292b2c;
+	display: none;
 }
-.comment-avatar img{
-    width: 40px;
-    height: 40px;
+#recipient {
+	color: #16a085;
+	display: none;
 }
-.comment-header{
-    padding: 10px 10px;
-    border-top: solid 1px;
-    border-left: solid 1px;
-    border-right: solid 1px;
-    border-color: silver;
-    border-top-left-radius: 4px;
-    border-top-right-radius: 4px;
+.pinglun-text {
+    padding: 10px 0;
 }
-.comment-header span{
-    font-size: 1.2em;
-    margin-left: 5px;
-}
-.comment-list{
-    border-top: solid 1px;
-    border-color: #e74851;
-}
-.first-generation{
-    border-bottom: solid 1px;
-    border-color: silver;
-}
-.comment-root{
-    padding: 20px 0 10px;
-    margin: 0;
-}
-.comment-leaf{
-    padding: 15px 0 10px;
-    margin: 0;
-    margin-left: 60.2167px;
-    border-top: dashed 1px;
-    border-color: silver;
-}
-.comment-left{
-    padding: 0;
-}
-.comment-right{
-    padding: 0;
-}
-.comment-reply-to{
-    color: #23527c;
-}
-.comment-time{
-    color: #8590a6;
-}
-.comment-content{
-    margin: 5px 0;
-}
-.comment-content img{
-    max-width: 100%;
-    height: auto;
-    border: solid 1px;
-    margin: 5px 0;
-}
-.like{
-    margin-right: 15px;
-}
-.dislike{
-    margin-right: 15px;
-}
-#cancel-reply{
-    margin-right: 20px;
-}
-.comment-count{
-    margin:40px 0 5px;
-    color: #e74851;
-}
-.container-fluid{
-    padding: 0;
-}
-.like-total{
-    margin-left: 5px;
-}
-.dislike-total{
-    margin-left: 5px;
-}
-.red-finger{
-    color: #e74851;
-}
-
-/*--- notification setting */
-.notice-list{
-    margin-top: 50px;
-}
-.notice-head{
-    border-bottom: solid 1px;
-    border-color: silver;
-}
-.notifications{
-    padding: 0;
-}
-.notifications img{
-    margin: 5px 0;
+.pinglun-text img {
     max-width: 100%;
     height: auto;
 }
-.notice-target{
-    color: #e74851;
-}
-.notice-action{
-    margin: 0;
-}
-.notice-action a{
-    margin-left: 20px;
+.pinglun-avatar {
+	float: left;
+    width: 8%;
+    margin: auto;
 }

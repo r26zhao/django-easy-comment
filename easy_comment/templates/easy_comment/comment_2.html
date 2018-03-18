@@ -1,5 +1,4 @@
 {% load comment_tags %}
-{% load staticfiles %}
 <div class="pinglun" id="评论">
     <div class="comment-form-header">
         {% if request.user.is_authenticated %}
@@ -44,10 +43,6 @@
     <div class="pinglun-list">
     </div>
 </div>
-<!-- 站内通知功能 -->
-<script src="{% static 'notifications/notice.js' %}"></script>
-
-<!-- 提交评论 回复 各种ajax -->
 <script>
     $('.pinglun-text img').removeAttr('style');
     $(".django-ckeditor-widget").removeAttr('style');
@@ -84,7 +79,7 @@
                 // 评论提交成功
                 if (data.msg == 'success!') {
                     // 加载评论html
-                    $(".pinglun-list").html(data.html);
+                    $(".pinglun-list").prepend(data.html);
                     // 清空编辑框内容
                     CKEDITOR.instances.id_content.setData("");
                     $("#cancel-button").css('display', 'none');
@@ -139,28 +134,4 @@
             $('.pinglun h2 span').text( data.user_count + "人参与 | " + data.comment_count + "条评论");
         }
     );
-    var page = 1;
-    var empty_page = false;
-    var block_request = false;
-    // 滚动加载评论
-    $(window).scroll(function () {
-        var margin = $(document).height() - $(window).height() - 200;
-        if ($(window).scrollTop() > margin && empty_page == false && block_request == false) {
-            block_request = true;
-            page += 1;
-            $.get(
-                "{% url 'easy_comment:comment_list' entry.id %}?page=" + page,
-                function(data) {
-                    if(data == '') {
-                    empty_page = true;
-                }
-                else {
-                    block_request = false;
-                    $(".pinglun-list").append(data.html);
-                    Prism.highlightAll();
-                    $('.pinglun-text img').removeAttr('style');
-                }
-            });
-        }
-    });
 </script>

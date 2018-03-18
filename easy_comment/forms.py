@@ -1,16 +1,22 @@
 from django import forms
+from django.template.defaultfilters import striptags
+
 from .models import Comment
+
 
 class CommentForm(forms.ModelForm):
     honeypot = forms.CharField(required=False,
                                label='If you enter anything in this field, you comment will be treated as spam!')
+
     class Meta:
         model = Comment
-        fields = ('content', 'parent', 'post')
+        fields = ('content', 'parent', 'entry')
 
-    # 验证honeypot字段，如果有输入，则是垃圾评论
-    def clean_honeypot(self):
-        value = self.cleaned_data['honeypot']
-        if value:
-            return forms.ValidationError(self.fields['honeypot'].error_message)
+    def clean_content(self):
+        """
+        检查content字段是否为空
+        """
+        value = self.cleaned_data['content']
+        if striptags(value).replace(' ', '').replace('&nbsp;', '') == '' and not '<img' in value:
+            self.add_error('content', '兄dei，评论内容不能为空~')
         return value
