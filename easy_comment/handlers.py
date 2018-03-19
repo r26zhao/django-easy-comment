@@ -42,14 +42,14 @@ def comment_handler(sender, instance, created, **kwargs):
                 notify.send(instance.user, recipient=recipient,
                             verb='回复了 %s' % instance.parent.user.username,
                             action_object=instance,
-                            target=instance.entry,
+                            target=instance.content_object,
                             description=instance.content)
                 if SEND_NOTIFICATION_EMAIL:
                     email_handler(*recipient)
             if not instance.user.username == instance.parent.user.username:
                 notify.send(instance.user, recipient=instance.parent.user, verb='@了你',
                             action_object=instance,
-                            target=instance.entry,
+                            target=instance.content_object,
                             description=instance.content)
                 if SEND_NOTIFICATION_EMAIL:
                     email_handler(instance.parent.user)
@@ -57,7 +57,7 @@ def comment_handler(sender, instance, created, **kwargs):
             if recipient.count() > 0:
                 notify.send(instance.user, recipient=recipient, verb='发表了评论',
                             action_object=instance,
-                            target=instance.entry,
+                            target=instance.content_object,
                             description=instance.content)
                 if SEND_NOTIFICATION_EMAIL:
                     email_handler(*recipient)

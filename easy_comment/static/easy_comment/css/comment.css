@@ -1,4 +1,4 @@
-#id_parent, #id_entry, #id_honeypot {
+#id_parent, #id_content_type, #id_honeypot, #id_object_id {
     display: none;
 }
 #cancel-button {

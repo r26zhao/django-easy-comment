@@ -10,7 +10,7 @@ class CommentForm(forms.ModelForm):
 
     class Meta:
         model = Comment
-        fields = ('content', 'parent', 'entry')
+        fields = ('content', 'parent', 'content_type', 'object_id')
 
     def clean_content(self):
         """

@@ -1,7 +1,7 @@
 {% load staticfiles %}
 <div class="pinglun-entry" id="c{{ comment.id }}">
     <div class="pinglun-avatar">
-        <img src="{{ comment.user.get_avatar_url }}">
+        <img src="{{ comment.user.avatar.url }}">
     </div>
     <div class="pinglun-body">
         <h3>

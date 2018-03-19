@@ -76,7 +76,8 @@
                     'honeypot':$("#id_honeypot").val(),
                     'content':CKEDITOR.instances.id_content.getData(),
                     'parent':pid,
-                    'entry':$('#id_entry option:selected').val()
+                    'content_type':$('#id_content_type option:selected').val(),
+                    'object_id': $('#id_object_id').val()
             },
             dataType:'json',
             success:function (data) {
@@ -129,8 +130,11 @@
         sessionStorage.removeItem('reply');
     });
     // 从comment_list view获取评论html，评论人数，评论数量
+    {% get_content_type_id entry as type_id %}
+    var type_id = {{ type_id }}
     $.get(
         "{% url 'easy_comment:comment_list' entry.id %}",
+        {'content_type': type_id},
         function (data) {
             $(".pinglun-list").html(data.html);
             Prism.highlightAll();
@@ -149,6 +153,7 @@
             page += 1;
             $.get(
                 "{% url 'easy_comment:comment_list' entry.id %}?page=" + page,
+                {'content_type': type_id},
                 function(data) {
                     if(data == '') {
                     empty_page = true;

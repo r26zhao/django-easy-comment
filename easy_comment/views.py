@@ -4,6 +4,7 @@ from django.http import JsonResponse
 from django.views.decorators.http import require_POST
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger, InvalidPage
+from django.contrib.contenttypes.models import ContentType
 
 import easy_comment.handlers
 from easy_comment.forms import CommentForm
@@ -25,14 +26,21 @@ def submit_comment(request):
     if form.is_valid():
         new_comment = form.save(commit=False)
         new_comment.user = request.user
+        type_id = request.POST.get('content_type')
+        object_id = request.POST.get('object_id')
+        if type_id and object_id:
+            content_type = ContentType.objects.get_for_id(type_id)
+            content_object = content_type.get_object_for_this_type(id=object_id)
+        else:
+            content_object = None
+        new_comment.content_object = content_object
         new_comment.save()
-        user_count = get_comments_user_count(entry=new_comment.entry)
-        comment_count = get_comment_list(entry=new_comment.entry).count()
+        comment_list = get_comment_list(content_object).order_by('-created')
+        user_count = get_comments_user_count(entry=content_object)
+        comment_count = comment_list.count()
         paginate_by = getattr(settings, 'COMMENT_PAGINATE_BY', 10)
         if paginate_by:
-            comment_list = get_comment_list(entry=new_comment.entry).order_by('-created')[: paginate_by]
-        else:
-            comment_list = get_comment_list(entry=new_comment.entry).order_by('-created')
+            comment_list = comment_list[: paginate_by]
         comment_list_html = ''
         for comment in comment_list:
             comment_list_html += comment.to_html()
@@ -58,11 +66,10 @@ def comment_list(request, pk=None):
     :return: JsonResponse
     """
     try:
-        app_model = settings.COMMENT_ENTRY_MODEL.split('.')
-        entry_model = apps.get_model(*app_model)
-        entry = entry_model.objects.get(pk=pk)
+        type_id = request.GET.get('content_type')
+        content_type = ContentType.objects.get_for_id(type_id)
+        entry = content_type.get_object_for_this_type(id=pk)
     except Exception as e:
-        print(e)
         entry = None
     paginate_by = getattr(settings, 'COMMENT_PAGINATE_BY', 10)
     comment_list = get_comment_list(entry=entry).order_by('-created')
