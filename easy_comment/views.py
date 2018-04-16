@@ -35,14 +35,14 @@ def submit_comment(request):
             content_object = None
         new_comment.content_object = content_object
         new_comment.save()
-        comment_list = get_comment_list(content_object).order_by('-created')
+        commt_list = get_comment_list(content_object).order_by('-created')
         user_count = get_comments_user_count(entry=content_object)
         comment_count = comment_list.count()
         paginate_by = getattr(settings, 'COMMENT_PAGINATE_BY', 10)
         if paginate_by:
-            comment_list = comment_list[: paginate_by]
+            commt_list = comment_list[: paginate_by]
         comment_list_html = ''
-        for comment in comment_list:
+        for comment in commt_list:
             comment_list_html += comment.to_html()
         return JsonResponse({'msg': 'success!',
                              'html': comment_list_html,
@@ -54,6 +54,7 @@ def submit_comment(request):
     else:
         msg = '评论出错啦！'
     return JsonResponse({"msg": msg})
+
 
 def comment_list(request, pk=None):
     """
@@ -72,20 +73,20 @@ def comment_list(request, pk=None):
     except Exception as e:
         entry = None
     paginate_by = getattr(settings, 'COMMENT_PAGINATE_BY', 10)
-    comment_list = get_comment_list(entry=entry).order_by('-created')
-    comment_count = comment_list.count()
+    commt_list = get_comment_list(entry=entry).order_by('-created')
+    comment_count = commt_list.count()
     user_count = get_comments_user_count(entry=entry)
     if paginate_by:
-        paginator = Paginator(comment_list, paginate_by)
+        paginator = Paginator(commt_list, paginate_by)
         page = request.GET.get('page', 1)
         try:
-            comment_list = paginator.page(page)
+            commt_list = paginator.page(page)
         except PageNotAnInteger:
-            comment_list = paginator.page(1)
+            commt_list = paginator.page(1)
         except EmptyPage:
-            comment_list = []
+            commt_list = []
     comment_list_html = ''
-    for comment in comment_list:
+    for comment in commt_list:
         comment_list_html += comment.to_html()
     return JsonResponse({'html': comment_list_html,
                          'user_count': user_count,

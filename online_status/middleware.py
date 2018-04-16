@@ -1,16 +1,19 @@
 import datetime
+
 from django.utils import timezone
 from django.core.cache import cache
+from django.utils.deprecation import MiddlewareMixin
+
 from . import settings
 from .models import OnlineStatus
-from django.utils.deprecation import MiddlewareMixin
+
 
 class OnlineStatusMiddleware(MiddlewareMixin):
 
     def process_request(self, request):
         if request.user.is_authenticated() and (not request.path == '/notifications/api/unread_count/'):
             cache_key = '%s_last_login' % request.user.username
-            now =timezone.now()
+            now = timezone.now()
             # 用户是第一次登录、或者是缓存过去、或者是服务器重启导致缓存消失
             if not cache.get(cache_key):
                 # print('#### cache not found #####')

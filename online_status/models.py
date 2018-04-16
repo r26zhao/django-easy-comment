@@ -1,13 +1,17 @@
-from django.db import models
-from . import settings
-from django.core.cache import cache
 import datetime
+
+from django.db import models
+from django.core.cache import cache
 from django.utils import timezone
+
+from . import settings
 # Create your models here.
+
 
 class OnlineStatus(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     last_login = models.DateTimeField(default=timezone.now)
+
     class Meta:
         verbose_name = 'Online Status'
         verbose_name_plural = 'Online Status'

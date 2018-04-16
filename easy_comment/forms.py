@@ -17,6 +17,6 @@ class CommentForm(forms.ModelForm):
         检查content字段是否为空
         """
         value = self.cleaned_data['content']
-        if striptags(value).replace(' ', '').replace('&nbsp;', '') == '' and not '<img' in value:
+        if striptags(value).replace(' ', '').replace('&nbsp;', '') == '' and '<img' not in value:
             self.add_error('content', '兄dei，评论内容不能为空~')
         return value

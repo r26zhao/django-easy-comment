@@ -1,6 +1,5 @@
 from mptt.models import TreeForeignKey, MPTTModel
 from ckeditor_uploader.fields import RichTextUploadingField
-
 from django.db import models
 from django.conf import settings
 from django.core.cache import cache
