@@ -35,14 +35,14 @@ def submit_comment(request):
             content_object = None
         new_comment.content_object = content_object
         new_comment.save()
-        commt_list = get_comment_list(content_object).order_by('-created')
+        cmt_list = get_comment_list(content_object).order_by('-created')
         user_count = get_comments_user_count(entry=content_object)
-        comment_count = comment_list.count()
+        comment_count = cmt_list.count()
         paginate_by = getattr(settings, 'COMMENT_PAGINATE_BY', 10)
         if paginate_by:
-            commt_list = comment_list[: paginate_by]
+            cmt_list = cmt_list[: paginate_by]
         comment_list_html = ''
-        for comment in commt_list:
+        for comment in cmt_list:
             comment_list_html += comment.to_html()
         return JsonResponse({'msg': 'success!',
                              'html': comment_list_html,
@@ -73,20 +73,20 @@ def comment_list(request, pk=None):
     except Exception as e:
         entry = None
     paginate_by = getattr(settings, 'COMMENT_PAGINATE_BY', 10)
-    commt_list = get_comment_list(entry=entry).order_by('-created')
-    comment_count = commt_list.count()
+    cmt_list = get_comment_list(entry=entry).order_by('-created')
+    comment_count = cmt_list.count()
     user_count = get_comments_user_count(entry=entry)
     if paginate_by:
-        paginator = Paginator(commt_list, paginate_by)
+        paginator = Paginator(cmt_list, paginate_by)
         page = request.GET.get('page', 1)
         try:
-            commt_list = paginator.page(page)
+            cmt_list = paginator.page(page)
         except PageNotAnInteger:
-            commt_list = paginator.page(1)
+            cmt_list = paginator.page(1)
         except EmptyPage:
-            commt_list = []
+            cmt_list = []
     comment_list_html = ''
-    for comment in commt_list:
+    for comment in cmt_list:
         comment_list_html += comment.to_html()
     return JsonResponse({'html': comment_list_html,
                          'user_count': user_count,
